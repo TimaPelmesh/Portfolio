@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тимур — IT & Веб-разработка</title>
+  <meta name="description" content="Портфолио Иванова Тимура — разработчик сайтов, IT-специалист. SKL Academy, CORAX, WIN AI Challenge.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+
+  <nav class="nav" id="nav">
+    <a href="#" class="nav__logo">tima<span class="nav__dot">.</span>dev</a>
+    <ul class="nav__links">
+      <li><a href="#projects">проекты</a></li>
+      <li><a href="#about">обо мне</a></li>
+      <li><a href="#skills">навыки</a></li>
+      <li><a href="#certs">сертификаты</a></li>
+      <li><a href="#contact">контакт</a></li>
+    </ul>
+    <button class="nav__burger" id="burger" aria-label="Меню">
+      <span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <ul>
+      <li><a href="#projects" class="mm-link">проекты</a></li>
+      <li><a href="#about" class="mm-link">обо мне</a></li>
+      <li><a href="#skills" class="mm-link">навыки</a></li>
+      <li><a href="#certs" class="mm-link">сертификаты</a></li>
+      <li><a href="#contact" class="mm-link">контакт</a></li>
+    </ul>
+  </div>
+
+  <header class="hero">
+    <div class="hero__inner">
+      <div class="hero__text">
+        <div class="hero__badge reveal">веб · backend · AI</div>
+        <h1 class="hero__title reveal">
+          разработка<br><em class="hero__em">&amp; код</em>
+        </h1>
+        <p class="hero__sub reveal">
+          Создаю сайты и веб-приложения — от идеи и вёрстки до бэкенда, интеграций и деплоя на продакшн
+        </p>
+        <a href="#projects" class="btn-cta reveal">
+          смотреть проекты
+          <span class="btn-cta__arrow">↘</span>
+        </a>
+      </div>
+
+      <div class="hero__visual reveal">
+        <div class="terminal" id="terminal">
+          <div class="terminal__bar">
+            <span class="terminal__dot terminal__dot--r"></span>
+            <span class="terminal__dot terminal__dot--y"></span>
+            <span class="terminal__dot terminal__dot--g"></span>
+            <span class="terminal__title">tima@dev ~ zsh</span>
+          </div>
+          <div class="terminal__body">
+            <pre class="terminal__code" id="terminal-code"></pre>
+            <span class="terminal__cursor-blink">▋</span>
+          </div>
+        </div>
+
+        <div class="stack-wrap">
+          <div class="stack" id="stack"></div>
+          <p class="stack__caption">TECH STACK®</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__ticker">
+      <div class="ticker__track" id="ticker-track"></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="works" id="projects">
+      <div class="works__head">
+        <div class="works__head-left">
+          <h2 class="section-title">мои проекты</h2>
+          <span class="section-corner">↙</span>
+        </div>
+        <a href="https://github.com/TimaPelmesh" target="_blank" rel="noopener" class="section-all">(все на github)</a>
+      </div>
+
+      <div class="works__grid">
+        <article class="pcard pcard--featured pcard--has-modal" data-project="skl" style="--cb:#EEF4FF">
+          <div class="pcard__img">
+            <svg viewBox="0 0 160 160" fill="none" aria-hidden="true">
+              <rect x="20" y="28" width="120" height="88" rx="10" stroke="#2563EB" stroke-width="3"/>
+              <rect x="32" y="44" width="56" height="6" rx="3" fill="#2563EB" opacity=".5"/>
+              <rect x="32" y="58" width="96" height="4" rx="2" fill="#94A3B8"/>
+              <rect x="32" y="68" width="80" height="4" rx="2" fill="#94A3B8"/>
+              <rect x="32" y="78" width="64" height="4" rx="2" fill="#94A3B8"/>
+              <circle cx="108" cy="96" r="18" fill="#2563EB" opacity=".15"/>
+              <path d="M100 96l6 6 12-14" stroke="#2563EB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="pcard__info">
+            <p class="pcard__tag">образовательная платформа</p>
+            <h3 class="pcard__name">SKL Academy</h3>
+            <p class="pcard__link">открыть сайт ↗</p>
+          </div>
+        </article>
+
+        <article class="pcard pcard--featured pcard--has-modal" data-project="corax" style="--cb:#F0FDF4">
+          <div class="pcard__img">
+            <svg viewBox="0 0 160 160" fill="none" aria-hidden="true">
+              <circle cx="80" cy="72" r="36" stroke="#16A34A" stroke-width="3"/>
+              <circle cx="80" cy="72" r="12" fill="#16A34A" opacity=".2"/>
+              <path d="M44 108h72" stroke="#16A34A" stroke-width="3" stroke-linecap="round"/>
+              <rect x="52" y="116" width="56" height="20" rx="4" stroke="#16A34A" stroke-width="2.5"/>
+              <path d="M68 48l12-8 12 8" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="pcard__info">
+            <p class="pcard__tag">FastAPI · сети · AI</p>
+            <h3 class="pcard__name">CORAX</h3>
+            <p class="pcard__link">подробнее ↗</p>
+          </div>
+        </article>
+
+        <article class="pcard pcard--award pcard--has-modal" data-project="win" style="--cb:#FFF7ED">
+          <div class="pcard__badge">🏆</div>
+          <div class="pcard__img">
+            <svg viewBox="0 0 160 160" fill="none" aria-hidden="true">
+              <path d="M80 28l14 28 32 4-24 22 6 32-28-14-28 14 6-32-24-22 32-4z" stroke="#EA580C" stroke-width="3" stroke-linejoin="round"/>
+              <circle cx="80" cy="78" r="22" stroke="#EA580C" stroke-width="2.5" opacity=".4"/>
+              <text x="80" y="84" text-anchor="middle" font-family="JetBrains Mono" font-size="14" font-weight="700" fill="#EA580C">AI</text>
+            </svg>
+          </div>
+          <div class="pcard__info">
+            <p class="pcard__tag">победа в конкурсе</p>
+            <h3 class="pcard__name">WIN AI Challenge</h3>
+            <p class="pcard__link">достижение ↗</p>
+          </div>
+        </article>
+
+        <article class="pcard pcard--has-modal" data-project="fusion" style="--cb:#FAF5FF">
+          <div class="pcard__img">
+            <svg viewBox="0 0 160 160" fill="none" aria-hidden="true">
+              <rect x="36" y="40" width="88" height="72" rx="8" stroke="#7C3AED" stroke-width="3"/>
+              <path d="M52 96V64l16 16 16-24 16 20" stroke="#7C3AED" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="112" cy="52" r="14" fill="#7C3AED" opacity=".15"/>
+              <text x="112" y="57" text-anchor="middle" font-family="JetBrains Mono" font-size="11" font-weight="700" fill="#7C3AED">#2</text>
+            </svg>
+          </div>
+          <div class="pcard__info">
+            <p class="pcard__tag">data science</p>
+            <h3 class="pcard__name">Data Fusion</h3>
+            <p class="pcard__link">топ-2 ↗</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="about__inner">
+        <div class="about__photo">
+          <img src="https://avatars.githubusercontent.com/u/178938101?v=4" alt="Иванов Тимур" width="600" height="700">
+          <div class="about__photo-glitch" aria-hidden="true"></div>
+        </div>
+        <div class="about__content">
+          <div class="about__text">
+            <h2 class="section-title">привет,<br>я — тимур</h2>
+            <p>IT-специалист и разработчик сайтов. Люблю, когда идея превращается в работающий продукт — который можно открыть в браузере, потрогать интерфейсом и показать людям.</p>
+            <p>Делаю образовательные платформы, веб-приложения и backend-системы: от вёрстки и UX до API, баз данных и деплоя.</p>
+          </div>
+          <div class="about__stats">
+            <div class="stat">
+              <span class="stat__num" data-target="3">0</span><span class="stat__suffix">+</span>
+              <p class="stat__lbl">года в разработке</p>
+            </div>
+            <div class="stat">
+              <span class="stat__num" data-target="20">0</span><span class="stat__suffix">+</span>
+              <p class="stat__lbl">проектов на github</p>
+            </div>
+            <div class="stat">
+              <span class="stat__num" data-target="9">0</span>
+              <p class="stat__lbl">курсов в SKL Academy</p>
+            </div>
+            <div class="stat">
+              <span class="stat__num stat__num--text">∞</span>
+              <p class="stat__lbl">идей для кода</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="services" id="skills">
+      <h2 class="section-title services__title">что умею</h2>
+      <div class="services__grid">
+        <article class="scard">
+          <div class="scard__icon" aria-hidden="true">&lt;/&gt;</div>
+          <h3 class="scard__name">Веб-разработка</h3>
+          <p class="scard__desc">Вёрстка, адаптив, анимации и интерактив — от лендингов до сложных веб-приложений на HTML, CSS и JavaScript</p>
+        </article>
+        <article class="scard">
+          <div class="scard__icon" aria-hidden="true">{ }</div>
+          <h3 class="scard__name">Backend & API</h3>
+          <p class="scard__desc">Python, FastAPI, REST API, авторизация, интеграции с внешними сервисами и Telegram-ботами</p>
+        </article>
+        <article class="scard">
+          <div class="scard__icon" aria-hidden="true">◎</div>
+          <h3 class="scard__name">AI & Data</h3>
+          <p class="scard__desc">Машинное обучение, анализ данных, LLM-интеграции и решение прикладных задач на конкурсах и хакатонах</p>
+        </article>
+        <article class="scard">
+          <div class="scard__icon" aria-hidden="true">⚡</div>
+          <h3 class="scard__name">Деплой & DevOps</h3>
+          <p class="scard__desc">Git, GitHub Pages, настройка серверов, CI/CD и вывод проектов в продакшн</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="certs" id="certs">
+      <div class="certs__head">
+        <h2 class="section-title">сертификаты</h2>
+        <p class="certs__hint">наведи — перевернётся</p>
+      </div>
+      <div class="certs__grid">
+        <article class="cert-card">
+          <div class="cert-card__inner">
+            <div class="cert-card__front">
+              <span class="cert-card__year">2025</span>
+              <h3>WIN AI Challenge</h3>
+              <p>Победитель</p>
+            </div>
+            <div class="cert-card__back">
+              <p>Международный конкурс по искусственному интеллекту — победа в номинации</p>
+            </div>
+          </div>
+        </article>
+        <article class="cert-card">
+          <div class="cert-card__inner">
+            <div class="cert-card__front">
+              <span class="cert-card__year">2026</span>
+              <h3>Data Fusion</h3>
+              <p>Топ-2</p>
+            </div>
+            <div class="cert-card__back">
+              <p>Задача «Герои» — score 294 500 на платформе конкурса</p>
+            </div>
+          </div>
+        </article>
+        <article class="cert-card">
+          <div class="cert-card__inner">
+            <div class="cert-card__front">
+              <span class="cert-card__year">—</span>
+              <h3>Python</h3>
+              <p>Сертификат</p>
+            </div>
+            <div class="cert-card__back">
+              <p>Программирование на Python — разработка приложений и скриптов</p>
+            </div>
+          </div>
+        </article>
+        <article class="cert-card">
+          <div class="cert-card__inner">
+            <div class="cert-card__front">
+              <span class="cert-card__year">—</span>
+              <h3>Веб-разработка</h3>
+              <p>Сертификат</p>
+            </div>
+            <div class="cert-card__back">
+              <p>HTML, CSS, JavaScript — создание современных веб-интерфейсов</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <h2 class="contact__title">
+        <span>давайте</span>
+        <span>сделаем</span>
+        <span>что-то</span>
+        <span class="contact__title--accent">крутое</span>
+      </h2>
+      <div class="contact__links">
+        <a href="https://github.com/TimaPelmesh" target="_blank" rel="noopener" class="contact__link">
+          <span class="contact__lbl">github</span>
+          <span>TimaPelmesh ↗</span>
+        </a>
+        <a href="https://skl-academy.tech" target="_blank" rel="noopener" class="contact__link">
+          <span class="contact__lbl">проект</span>
+          <span>skl-academy.tech ↗</span>
+        </a>
+        <a href="mailto:timur@example.com" class="contact__link contact__link--email">
+          <span class="contact__lbl">почта</span>
+          <span>написать ↗</span>
+        </a>
+      </div>
+      <div class="contact__stamp" aria-hidden="true">CODE</div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span class="footer__logo">tima<span class="nav__dot">.</span>dev</span>
+    <span>© 2026 — IT & Веб-разработка</span>
+  </footer>
+
+  <div class="modal" id="project-modal">
+    <div class="modal__dialog" id="project-dialog">
+      <button class="modal__close" id="project-close" aria-label="Закрыть">×</button>
+      <p class="modal__tag" id="project-tag"></p>
+      <h3 class="modal__title" id="project-title"></h3>
+      <p class="modal__desc" id="project-desc"></p>
+      <ul class="modal__tech" id="project-tech"></ul>
+      <div class="modal__actions">
+        <a class="btn-cta modal__btn" id="project-link" href="#" target="_blank" rel="noopener">открыть проект ↗</a>
+        <a class="btn-cta btn-cta--ghost modal__btn" id="project-github" href="#" target="_blank" rel="noopener">github ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <canvas class="particles" id="particles" aria-hidden="true"></canvas>
+
+  <script src="script.js"></script>
+</body>
+</html>
