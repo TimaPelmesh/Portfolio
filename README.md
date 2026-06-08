@@ -12,10 +12,9 @@ npx serve .
 
 ## Деплой на GitHub Pages
 
-1. Создайте репозиторий на GitHub (например `profolio` или `tima.dev`)
-2. Загрузите файлы в ветку `main`
-3. **Settings → Pages → Source**: Deploy from branch `main`, folder `/ (root)`
-4. Сайт будет доступен по адресу `https://<username>.github.io/<repo>/`
+1. Репозиторий: [TimaPelmesh/Portfolio](https://github.com/TimaPelmesh/Portfolio)
+2. **Settings → Pages → Source**: Deploy from branch `main`, folder `/ (root)`
+3. Сайт: `https://timapelmesh.github.io/Portfolio/`
 
 ## Что поменять под себя
 
