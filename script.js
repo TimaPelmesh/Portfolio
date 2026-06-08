@@ -4,44 +4,13 @@
 
 /* ---- CUSTOM CURSOR ---- */
 (function initCursor() {
-  const wrap = document.getElementById('cursor-wrap');
   const dot = document.getElementById('cursor');
   const ring = document.getElementById('cursor-ring');
-  const tag = document.getElementById('cursor-tag');
-  const trailEl = document.getElementById('cursor-trail');
-  const corners = ['cc-tl', 'cc-tr', 'cc-bl', 'cc-br'].map(id => document.getElementById(id));
-  if (!dot || !ring || !wrap) return;
+  if (!dot || !ring) return;
 
   let activated = false;
   let mx = -100, my = -100;
   let rx = -100, ry = -100;
-  let lastTrail = 0;
-
-  function placeCorners(x, y) {
-    corners.forEach(el => {
-      if (el) {
-        el.style.left = x + 'px';
-        el.style.top = y + 'px';
-      }
-    });
-    if (tag) {
-      tag.style.left = x + 'px';
-      tag.style.top = y + 'px';
-    }
-  }
-
-  function spawnTrail(x, y) {
-    if (!trailEl || Date.now() - lastTrail < 28) return;
-    lastTrail = Date.now();
-    const t = document.createElement('span');
-    t.className = 'cursor-trail__dot';
-    t.style.left = x + 'px';
-    t.style.top = y + 'px';
-    t.style.opacity = String(0.35 + Math.random() * 0.35);
-    trailEl.appendChild(t);
-    setTimeout(() => t.remove(), 550);
-    while (trailEl.children.length > 18) trailEl.firstChild.remove();
-  }
 
   function onMouseMove(e) {
     if (e.sourceCapabilities && e.sourceCapabilities.firesTouchEvents) return;
@@ -53,46 +22,28 @@
     my = e.clientY;
     dot.style.left = mx + 'px';
     dot.style.top = my + 'px';
-    placeCorners(mx, my);
-    spawnTrail(mx, my);
   }
 
   document.addEventListener('mousemove', onMouseMove);
 
-  document.addEventListener('mousedown', () => dot.classList.add('click'));
-  document.addEventListener('mouseup', () => dot.classList.remove('click'));
-
   (function animateRing() {
-    rx += (mx - rx) * 0.14;
-    ry += (my - ry) * 0.14;
+    rx += (mx - rx) * 0.15;
+    ry += (my - ry) * 0.15;
     ring.style.left = rx + 'px';
     ring.style.top = ry + 'px';
     requestAnimationFrame(animateRing);
   })();
 
-  const hoverMap = [
-    { sel: 'a, button, .btn-cta, .contact__link', tag: 'link' },
-    { sel: '.pcard', tag: 'open' },
-    { sel: '.scard', tag: 'skill' },
-    { sel: '.cert-card', tag: 'cert' },
-    { sel: '.stack-strip', tag: 'stack' },
-  ];
-
-  document.addEventListener('mouseover', e => {
-    for (const { sel, tag: t } of hoverMap) {
-      const el = e.target.closest(sel);
-      if (el) {
-        wrap.classList.add('hover');
-        dot.classList.add('hover');
-        ring.classList.add('hover');
-        if (tag) tag.textContent = t === 'link' ? '↗' : t === 'open' ? '{ }' : '</>';
-        return;
-      }
-    }
-    wrap.classList.remove('hover');
-    dot.classList.remove('hover');
-    ring.classList.remove('hover');
-    if (tag) tag.textContent = '</>';
+  const hoverTargets = 'a, button, .pcard, .scard, .cert-card, .btn-cta, .contact__link, .stack-card';
+  document.querySelectorAll(hoverTargets).forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      dot.classList.add('hover');
+      ring.classList.add('hover');
+    });
+    el.addEventListener('mouseleave', () => {
+      dot.classList.remove('hover');
+      ring.classList.remove('hover');
+    });
   });
 })();
 
@@ -136,30 +87,21 @@
   window.addEventListener('resize', resize, { passive: true });
 })();
 
-/* ---- HERO PARALLAX + GLITCH ---- */
+/* ---- HERO PARALLAX ---- */
 (function initHeroFx() {
   const visual = document.getElementById('hero-visual');
-  const title = document.getElementById('hero-title');
   const hero = document.getElementById('hero');
+  if (!visual || !hero) return;
 
-  if (visual && hero) {
-    hero.addEventListener('mousemove', e => {
-      const r = hero.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - 0.5;
-      const y = (e.clientY - r.top) / r.height - 0.5;
-      visual.style.transform = `translate(${x * 18}px, ${y * 14}px)`;
-    });
-    hero.addEventListener('mouseleave', () => {
-      visual.style.transform = '';
-    });
-  }
-
-  if (title) {
-    setInterval(() => {
-      title.classList.add('glitch');
-      setTimeout(() => title.classList.remove('glitch'), 380);
-    }, 5200);
-  }
+  hero.addEventListener('mousemove', e => {
+    const r = hero.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    visual.style.transform = `translate(${x * 10}px, ${y * 8}px)`;
+  });
+  hero.addEventListener('mouseleave', () => {
+    visual.style.transform = '';
+  });
 })();
 
 /* ---- ABOUT PHOTO ---- */
@@ -179,64 +121,17 @@
   check();
 })();
 
-/* ---- TECH STACK FAN ---- */
-(function initStack() {
-  const stackEl = document.getElementById('stack');
-  if (!stackEl) return;
-
-  const TECH = [
-    { label: 'HTML', color: '#E34F26', icon: '</>' },
-    { label: 'CSS', color: '#1572B6', icon: '{ }' },
-    { label: 'JS', color: '#F7DF1E', icon: 'fn' },
-    { label: 'PY', color: '#3776AB', icon: 'py' },
-    { label: 'API', color: '#16A34A', icon: 'REST' },
-    { label: 'SQL', color: '#336791', icon: 'DB' },
-    { label: 'GIT', color: '#F05032', icon: 'git' },
-    { label: 'AI', color: '#7C3AED', icon: 'ML' },
-  ];
-
-  const COUNT = TECH.length;
-  const TOTAL_DEG = 120;
-  const START_DEG = -TOTAL_DEG / 2;
-  const center = (COUNT - 1) / 2;
-
-  TECH.forEach((tech, i) => {
-    const angle = START_DEG + (TOTAL_DEG / (COUNT - 1)) * i;
-    const distFromCenter = Math.abs(i - center);
-    const delay = Math.round((distFromCenter / center) * 400);
-
-    const strip = document.createElement('div');
-    strip.className = 'stack-strip';
-    strip.style.setProperty('--angle', angle.toFixed(2) + 'deg');
-    strip.style.setProperty('--delay', delay + 'ms');
-    strip.style.background = `linear-gradient(180deg, ${tech.color} 0%, ${tech.color}cc 100%)`;
-    strip.style.zIndex = Math.round(COUNT - distFromCenter);
-
-    const icon = document.createElement('div');
-    icon.className = 'stack-strip__icon';
-    icon.textContent = tech.icon;
-    if (tech.label === 'JS') icon.style.color = '#1a1a1a';
-
-    const lbl = document.createElement('div');
-    lbl.className = 'stack-strip__lbl';
-    lbl.textContent = tech.label;
-
-    strip.appendChild(icon);
-    strip.appendChild(lbl);
-    stackEl.appendChild(strip);
-  });
-
-  requestAnimationFrame(() => {
-    setTimeout(() => stackEl.classList.add('stack--open'), 350);
-  });
-
-  stackEl.addEventListener('mouseover', e => {
-    const strip = e.target.closest('.stack-strip');
-    if (!strip) return;
-    const siblings = Array.from(stackEl.children);
-    const idx = siblings.indexOf(strip);
-    siblings.forEach((s, i) => {
-      s.style.zIndex = COUNT - Math.abs(i - idx);
+/* ---- STACK CARDS TILT ---- */
+(function initStackCards() {
+  document.querySelectorAll('.stack-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width - 0.5) * 10;
+      const y = ((e.clientY - r.top) / r.height - 0.5) * 10;
+      card.style.transform = `translateY(-3px) rotateX(${(-y).toFixed(1)}deg) rotateY(${x.toFixed(1)}deg)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
     });
   });
 })();
