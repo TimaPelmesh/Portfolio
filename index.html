@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Тимур — IT & Веб-разработка</title>
-  <meta name="description" content="Портфолио Иванова Тимура — разработчик сайтов, IT-специалист. SKL Academy, CORAX, WIN AI Challenge.">
+  <meta name="description" content="Портфолио Иванова Тимура — разработчик сайтов, IT-специалист. SKL Academy, CORAX, Wink AI Challenge — команда Pelmeska.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -12,8 +12,16 @@
 </head>
 <body>
 
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-ring" id="cursor-ring"></div>
+  <div class="cursor-wrap" id="cursor-wrap" aria-hidden="true">
+    <div class="cursor-corner cursor-corner--tl" id="cc-tl"></div>
+    <div class="cursor-corner cursor-corner--tr" id="cc-tr"></div>
+    <div class="cursor-corner cursor-corner--bl" id="cc-bl"></div>
+    <div class="cursor-corner cursor-corner--br" id="cc-br"></div>
+    <div class="cursor-ring" id="cursor-ring"></div>
+    <div class="cursor" id="cursor"></div>
+    <span class="cursor-tag" id="cursor-tag">&lt;/&gt;</span>
+  </div>
+  <div class="cursor-trail" id="cursor-trail"></div>
 
   <nav class="nav" id="nav">
     <a href="#" class="nav__logo">tima<span class="nav__dot">.</span>dev</a>
@@ -39,13 +47,28 @@
     </ul>
   </div>
 
-  <header class="hero">
+  <header class="hero" id="hero">
+    <canvas class="hero__matrix" id="hero-matrix" aria-hidden="true"></canvas>
+    <div class="hero__grid" aria-hidden="true"></div>
+    <div class="hero__orb hero__orb--1" aria-hidden="true"></div>
+    <div class="hero__orb hero__orb--2" aria-hidden="true"></div>
+
     <div class="hero__inner">
       <div class="hero__text">
-        <div class="hero__badge reveal">веб · backend · AI</div>
-        <h1 class="hero__title reveal">
-          разработка<br><em class="hero__em">&amp; код</em>
+        <div class="hero__badge reveal">
+          <span class="hero__badge-dot"></span>
+          веб · backend · AI
+        </div>
+        <h1 class="hero__title reveal" id="hero-title">
+          <span class="hero__title-line">разработка</span>
+          <span class="hero__title-line"><em class="hero__em">&amp; код</em></span>
         </h1>
+        <div class="hero__chips reveal" aria-hidden="true">
+          <span class="hero__chip">HTML</span>
+          <span class="hero__chip">Python</span>
+          <span class="hero__chip">FastAPI</span>
+          <span class="hero__chip hero__chip--live">AI ✦</span>
+        </div>
         <p class="hero__sub reveal">
           Создаю сайты и веб-приложения — от идеи и вёрстки до бэкенда, интеграций и деплоя на продакшн
         </p>
@@ -55,15 +78,24 @@
         </a>
       </div>
 
-      <div class="hero__visual reveal">
+      <div class="hero__visual reveal" id="hero-visual">
+        <div class="hero__orbit" aria-hidden="true">
+          <span class="hero__orbit-item" style="--i:0">git push</span>
+          <span class="hero__orbit-item" style="--i:1">npm run dev</span>
+          <span class="hero__orbit-item" style="--i:2">200 OK</span>
+          <span class="hero__orbit-item" style="--i:3">deploy ✓</span>
+        </div>
+
         <div class="terminal" id="terminal">
           <div class="terminal__bar">
             <span class="terminal__dot terminal__dot--r"></span>
             <span class="terminal__dot terminal__dot--y"></span>
             <span class="terminal__dot terminal__dot--g"></span>
-            <span class="terminal__title">tima@dev ~ zsh</span>
+            <span class="terminal__title">pelmeska@wink ~ bash</span>
+            <span class="terminal__status">● live</span>
           </div>
           <div class="terminal__body">
+            <div class="terminal__scanline" aria-hidden="true"></div>
             <pre class="terminal__code" id="terminal-code"></pre>
             <span class="terminal__cursor-blink">▋</span>
           </div>
@@ -128,19 +160,20 @@
           </div>
         </article>
 
-        <article class="pcard pcard--award pcard--has-modal" data-project="win" style="--cb:#FFF7ED">
-          <div class="pcard__badge">🏆</div>
+        <article class="pcard pcard--award pcard--has-modal" data-project="wink" style="--cb:#FFF0F6">
+          <div class="pcard__badge">🥇</div>
           <div class="pcard__img">
             <svg viewBox="0 0 160 160" fill="none" aria-hidden="true">
-              <path d="M80 28l14 28 32 4-24 22 6 32-28-14-28 14 6-32-24-22 32-4z" stroke="#EA580C" stroke-width="3" stroke-linejoin="round"/>
-              <circle cx="80" cy="78" r="22" stroke="#EA580C" stroke-width="2.5" opacity=".4"/>
-              <text x="80" y="84" text-anchor="middle" font-family="JetBrains Mono" font-size="14" font-weight="700" fill="#EA580C">AI</text>
+              <rect x="28" y="36" width="104" height="72" rx="8" stroke="#E11D74" stroke-width="3"/>
+              <path d="M44 88l20-28 16 20 24-32" stroke="#E11D74" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="112" cy="52" r="16" fill="#E11D74" opacity=".15"/>
+              <text x="112" y="57" text-anchor="middle" font-family="JetBrains Mono" font-size="10" font-weight="700" fill="#E11D74">Wink</text>
             </svg>
           </div>
           <div class="pcard__info">
-            <p class="pcard__tag">победа в конкурсе</p>
-            <h3 class="pcard__name">WIN AI Challenge</h3>
-            <p class="pcard__link">достижение ↗</p>
+            <p class="pcard__tag">1 место · трек 2 · Pelmeska</p>
+            <h3 class="pcard__name">Wink AI Challenge</h3>
+            <p class="pcard__link">challenge.wink.ru ↗</p>
           </div>
         </article>
 
@@ -164,15 +197,16 @@
 
     <section class="about" id="about">
       <div class="about__inner">
-        <div class="about__photo">
-          <img src="https://avatars.githubusercontent.com/u/178938101?v=4" alt="Иванов Тимур" width="600" height="700">
+        <div class="about__photo" id="about-photo">
+          <img src="photo.jpg" alt="Иванов Тимур" width="600" height="700" id="about-photo-img">
+          <div class="about__photo-placeholder" id="about-photo-ph">ТИ</div>
           <div class="about__photo-glitch" aria-hidden="true"></div>
         </div>
         <div class="about__content">
           <div class="about__text">
             <h2 class="section-title">привет,<br>я — тимур</h2>
             <p>IT-специалист и разработчик сайтов. Люблю, когда идея превращается в работающий продукт — который можно открыть в браузере, потрогать интерфейсом и показать людям.</p>
-            <p>Делаю образовательные платформы, веб-приложения и backend-системы: от вёрстки и UX до API, баз данных и деплоя.</p>
+            <p>Делаю образовательные платформы, веб-приложения и backend-системы: от вёрстки и UX до API, баз данных и деплоя. Победитель <a href="https://challenge.wink.ru/" target="_blank" rel="noopener" class="about__link">Wink AI Challenge</a> в составе команды Pelmeska.</p>
           </div>
           <div class="about__stats">
             <div class="stat">
@@ -227,16 +261,16 @@
         <h2 class="section-title">сертификаты</h2>
         <p class="certs__hint">наведи — перевернётся</p>
       </div>
-      <div class="certs__grid">
+      <div class="certs__grid certs__grid--pending">
         <article class="cert-card">
           <div class="cert-card__inner">
             <div class="cert-card__front">
               <span class="cert-card__year">2025</span>
-              <h3>WIN AI Challenge</h3>
-              <p>Победитель</p>
+              <h3>Wink AI Challenge</h3>
+              <p>1 место · Pelmeska</p>
             </div>
             <div class="cert-card__back">
-              <p>Международный конкурс по искусственному интеллекту — победа в номинации</p>
+              <p>Трек 2 — превизуализация сценариев. Хакатон Wink на стыке IT и кино. <a href="https://challenge.wink.ru/" target="_blank" rel="noopener">challenge.wink.ru ↗</a></p>
             </div>
           </div>
         </article>
@@ -252,27 +286,12 @@
             </div>
           </div>
         </article>
-        <article class="cert-card">
-          <div class="cert-card__inner">
+        <article class="cert-card cert-card--soon">
+          <div class="cert-card__inner cert-card__inner--static">
             <div class="cert-card__front">
-              <span class="cert-card__year">—</span>
-              <h3>Python</h3>
-              <p>Сертификат</p>
-            </div>
-            <div class="cert-card__back">
-              <p>Программирование на Python — разработка приложений и скриптов</p>
-            </div>
-          </div>
-        </article>
-        <article class="cert-card">
-          <div class="cert-card__inner">
-            <div class="cert-card__front">
-              <span class="cert-card__year">—</span>
-              <h3>Веб-разработка</h3>
-              <p>Сертификат</p>
-            </div>
-            <div class="cert-card__back">
-              <p>HTML, CSS, JavaScript — создание современных веб-интерфейсов</p>
+              <span class="cert-card__year">···</span>
+              <h3>Скоро</h3>
+              <p>ещё сертификаты</p>
             </div>
           </div>
         </article>
@@ -294,6 +313,10 @@
         <a href="https://skl-academy.tech" target="_blank" rel="noopener" class="contact__link">
           <span class="contact__lbl">проект</span>
           <span>skl-academy.tech ↗</span>
+        </a>
+        <a href="https://challenge.wink.ru/" target="_blank" rel="noopener" class="contact__link">
+          <span class="contact__lbl">хакатон</span>
+          <span>Pelmeska · Wink ↗</span>
         </a>
         <a href="mailto:timur@example.com" class="contact__link contact__link--email">
           <span class="contact__lbl">почта</span>

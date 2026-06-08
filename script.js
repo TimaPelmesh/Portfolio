@@ -4,51 +4,179 @@
 
 /* ---- CUSTOM CURSOR ---- */
 (function initCursor() {
+  const wrap = document.getElementById('cursor-wrap');
   const dot = document.getElementById('cursor');
   const ring = document.getElementById('cursor-ring');
-  if (!dot || !ring) return;
+  const tag = document.getElementById('cursor-tag');
+  const trailEl = document.getElementById('cursor-trail');
+  const corners = ['cc-tl', 'cc-tr', 'cc-bl', 'cc-br'].map(id => document.getElementById(id));
+  if (!dot || !ring || !wrap) return;
 
   let activated = false;
   let mx = -100, my = -100;
   let rx = -100, ry = -100;
+  let lastTrail = 0;
 
-  function onFirstMouseMove(e) {
+  function placeCorners(x, y) {
+    corners.forEach(el => {
+      if (el) {
+        el.style.left = x + 'px';
+        el.style.top = y + 'px';
+      }
+    });
+    if (tag) {
+      tag.style.left = x + 'px';
+      tag.style.top = y + 'px';
+    }
+  }
+
+  function spawnTrail(x, y) {
+    if (!trailEl || Date.now() - lastTrail < 28) return;
+    lastTrail = Date.now();
+    const t = document.createElement('span');
+    t.className = 'cursor-trail__dot';
+    t.style.left = x + 'px';
+    t.style.top = y + 'px';
+    t.style.opacity = String(0.35 + Math.random() * 0.35);
+    trailEl.appendChild(t);
+    setTimeout(() => t.remove(), 550);
+    while (trailEl.children.length > 18) trailEl.firstChild.remove();
+  }
+
+  function onMouseMove(e) {
     if (e.sourceCapabilities && e.sourceCapabilities.firesTouchEvents) return;
     if (!activated) {
       activated = true;
       document.body.classList.add('has-mouse-cursor');
-      dot.style.opacity = '1';
-      ring.style.opacity = '1';
     }
     mx = e.clientX;
     my = e.clientY;
     dot.style.left = mx + 'px';
     dot.style.top = my + 'px';
+    placeCorners(mx, my);
+    spawnTrail(mx, my);
   }
 
-  dot.style.opacity = '0';
-  ring.style.opacity = '0';
-  document.addEventListener('mousemove', onFirstMouseMove);
+  document.addEventListener('mousemove', onMouseMove);
+
+  document.addEventListener('mousedown', () => dot.classList.add('click'));
+  document.addEventListener('mouseup', () => dot.classList.remove('click'));
 
   (function animateRing() {
-    rx += (mx - rx) * 0.11;
-    ry += (my - ry) * 0.11;
+    rx += (mx - rx) * 0.14;
+    ry += (my - ry) * 0.14;
     ring.style.left = rx + 'px';
     ring.style.top = ry + 'px';
     requestAnimationFrame(animateRing);
   })();
 
-  const hoverTargets = 'a, button, .pcard, .scard, .cert-card, .btn-cta, .contact__link, .stack-strip';
-  document.querySelectorAll(hoverTargets).forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      dot.classList.add('hover');
-      ring.classList.add('hover');
-    });
-    el.addEventListener('mouseleave', () => {
-      dot.classList.remove('hover');
-      ring.classList.remove('hover');
-    });
+  const hoverMap = [
+    { sel: 'a, button, .btn-cta, .contact__link', tag: 'link' },
+    { sel: '.pcard', tag: 'open' },
+    { sel: '.scard', tag: 'skill' },
+    { sel: '.cert-card', tag: 'cert' },
+    { sel: '.stack-strip', tag: 'stack' },
+  ];
+
+  document.addEventListener('mouseover', e => {
+    for (const { sel, tag: t } of hoverMap) {
+      const el = e.target.closest(sel);
+      if (el) {
+        wrap.classList.add('hover');
+        dot.classList.add('hover');
+        ring.classList.add('hover');
+        if (tag) tag.textContent = t === 'link' ? '↗' : t === 'open' ? '{ }' : '</>';
+        return;
+      }
+    }
+    wrap.classList.remove('hover');
+    dot.classList.remove('hover');
+    ring.classList.remove('hover');
+    if (tag) tag.textContent = '</>';
   });
+})();
+
+/* ---- HERO MATRIX RAIN ---- */
+(function initHeroMatrix() {
+  const canvas = document.getElementById('hero-matrix');
+  const hero = document.getElementById('hero');
+  if (!canvas || !hero) return;
+
+  const ctx = canvas.getContext('2d');
+  const chars = '01{}[]<>/\\=constletfnasyncawait';
+  let cols, drops, w, h;
+
+  function resize() {
+    const rect = hero.getBoundingClientRect();
+    w = canvas.width = rect.width;
+    h = canvas.height = rect.height;
+    const fontSize = 14;
+    cols = Math.floor(w / fontSize);
+    drops = Array.from({ length: cols }, () => Math.random() * h / fontSize);
+    ctx.font = `${fontSize}px JetBrains Mono, monospace`;
+  }
+
+  function draw() {
+    ctx.fillStyle = 'rgba(249, 248, 245, 0.08)';
+    ctx.fillRect(0, 0, w, h);
+    for (let i = 0; i < cols; i++) {
+      const ch = chars[Math.floor(Math.random() * chars.length)];
+      const x = i * 14;
+      const y = drops[i] * 14;
+      ctx.fillStyle = `rgba(37, 99, 235, ${0.08 + Math.random() * 0.18})`;
+      ctx.fillText(ch, x, y);
+      if (y > h && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    }
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  draw();
+  window.addEventListener('resize', resize, { passive: true });
+})();
+
+/* ---- HERO PARALLAX + GLITCH ---- */
+(function initHeroFx() {
+  const visual = document.getElementById('hero-visual');
+  const title = document.getElementById('hero-title');
+  const hero = document.getElementById('hero');
+
+  if (visual && hero) {
+    hero.addEventListener('mousemove', e => {
+      const r = hero.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      visual.style.transform = `translate(${x * 18}px, ${y * 14}px)`;
+    });
+    hero.addEventListener('mouseleave', () => {
+      visual.style.transform = '';
+    });
+  }
+
+  if (title) {
+    setInterval(() => {
+      title.classList.add('glitch');
+      setTimeout(() => title.classList.remove('glitch'), 380);
+    }, 5200);
+  }
+})();
+
+/* ---- ABOUT PHOTO ---- */
+(function initPhoto() {
+  const img = document.getElementById('about-photo-img');
+  const box = document.getElementById('about-photo');
+  if (!img || !box) return;
+
+  function check() {
+    if (img.complete && img.naturalWidth > 0) {
+      box.classList.add('about__photo--has-img');
+    }
+  }
+
+  img.addEventListener('load', check);
+  img.addEventListener('error', () => box.classList.remove('about__photo--has-img'));
+  check();
 })();
 
 /* ---- TECH STACK FAN ---- */
@@ -119,13 +247,13 @@
   if (!codeEl) return;
 
   const LINES = [
-    '<span class="cm"># deploy portfolio</span>',
-    '<span class="kw">git</span> push origin main',
-    '<span class="ok">✓ deployed to GitHub Pages</span>',
+    '<span class="cm"># Wink AI Challenge — Pelmeska</span>',
+    '<span class="kw">team</span> = <span class="str">"Pelmeska"</span>',
+    '<span class="ok">✓ 1 место · трек 2 · превизуализация</span>',
     '',
-    '<span class="kw">const</span> dev = <span class="str">"Тимур"</span>;',
-    '<span class="fn">build</span>(<span class="str">"skl-academy.tech"</span>);',
-    '<span class="ok">→ live at https://skl-academy.tech</span>',
+    '<span class="fn">deploy</span>(<span class="str">"skl-academy.tech"</span>);',
+    '<span class="ok">→ 200 OK · 9 курсов online</span>',
+    '<span class="cm"># challenge.wink.ru</span>',
   ];
 
   let lineIdx = 0;
@@ -280,7 +408,7 @@
   const track = document.getElementById('ticker-track');
   if (!track) return;
 
-  const items = ['FRONTEND', 'BACKEND', 'PYTHON', 'JAVASCRIPT', 'FASTAPI', 'AI/ML', 'GIT', 'DEPLOY'];
+  const items = ['FRONTEND', 'BACKEND', 'PYTHON', 'WINK AI', 'PELMESKA', 'FASTAPI', 'GIT', 'DEPLOY'];
   const SEP = '✦';
 
   function buildCycle() {
@@ -327,13 +455,14 @@
       link: 'https://github.com/TimaPelmesh/case-34-CORAX',
       github: 'https://github.com/TimaPelmesh/case-34-CORAX',
     },
-    win: {
-      tag: 'достижение',
-      title: 'WIN AI Challenge',
-      desc: 'Победа в международном конкурсе по искусственному интеллекту. Решение прикладной AI-задачи с применением машинного обучения и анализа данных.',
-      tech: ['Python', 'Machine Learning', 'Data Analysis'],
-      link: 'https://github.com/TimaPelmesh',
+    wink: {
+      tag: '1 место · трек 2 · команда Pelmeska',
+      title: 'Wink AI Challenge',
+      desc: 'Хакатон Wink на стыке IT и кино (31 окт — 29 ноя 2025). Команда Pelmeska заняла 1 место в треке «Интеллектуальный сервис превизуализации сценариев» — система, преобразующая текстовые сценарии в раскадровки с AI.',
+      tech: ['Python', 'AI/ML', 'Computer Vision', 'Frontend', 'Wink'],
+      link: 'https://challenge.wink.ru/',
       github: 'https://github.com/TimaPelmesh',
+      linkLabel: 'challenge.wink.ru ↗',
     },
     fusion: {
       tag: 'data fusion contest 2026',
@@ -368,7 +497,9 @@
     els.desc.textContent = data.desc;
     els.tech.innerHTML = data.tech.map(t => `<li>${t}</li>`).join('');
     els.link.href = data.link;
+    els.link.textContent = data.linkLabel || 'открыть проект ↗';
     els.github.href = data.github;
+    els.github.style.display = data.hideGithub ? 'none' : '';
 
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
